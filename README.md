@@ -1,6 +1,6 @@
 [![NPM version](https://img.shields.io/npm/v/ironcal.svg?style=flat)](https://www.npmjs.com/package/ironcal)
 
-Generates a list of dates for a cohort.
+Generates a list of dates for an [Ironhack](https://www.ironhack.com) cohort.
 
 # bin
 
