@@ -1,0 +1,16 @@
+{
+  "name": "ironcal",
+  "version": "0.1.0",
+  "bin": "./bin.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abernier/ironcal.git"
+  },
+  "dependencies": {
+    "ics": "^2.22.1",
+    "luxon": "^1.24.1",
+    "minimist": "^1.2.5",
+    "rrule": "^2.6.4"
+  }
+}
