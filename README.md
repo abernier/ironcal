@@ -27,7 +27,7 @@ const json = ironcal('pt', '2020-06-02', ['2020-06-20','2020-07-04','2020-07-14'
 console.log(json)
 ```
 
-outputs a list of dates (45 days (9*5*1) for FT / 48 halfdays (24*4*.5) for PT)
+outputs a list of dates (45 days (`9*5*1`) for FT / 48 halfdays (`24*4*.5`) for PT)
 
 ```js
 [
