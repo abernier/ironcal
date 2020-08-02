@@ -4,7 +4,7 @@ Generates a list of dates for an [Ironhack](https://www.ironhack.com) cohort.
 
 # bin
 
-Binary will generate am `ICS` calendar.
+Generates an `ICS` calendar of the cohort's dates.
 
 ## Usage
 
@@ -17,6 +17,8 @@ $ npx ironcal --help
 ```sh
 $ npx ironcal pt --start=2020-06-02 --hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21 >wdpt202006par.ics
 ```
+
+![](https://assets.codepen.io/67030/Screenshot+2020-08-03+at+00.50.17.png)
 
 NB: The `ics` file is directly printed to `stdout`: to save it to disk, remember to redirect > to `wdpt202006par.ics`.
 
