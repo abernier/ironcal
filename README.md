@@ -207,5 +207,5 @@ Start the web server: `node server.js` or `docker run -p 3000:3000 ironcal`, the
 curl http://localhost:3000/?ftpt=pt&tzid=Europe%2FParis&start=2020-06-02&hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21&calname=wdpt202006par
 ```
 
-NB: you need to `encodeURIComponent` your `tzid` value, eg: `Europe%2FParis` for `Europe/Paris`
-NB: there is also a running instance on https://ironcal.herokuapp.com.
+- NB: you need to `encodeURIComponent` your `tzid` value, eg: `Europe%2FParis` for `Europe/Paris`
+- NB: there is also a running instance on https://ironcal.herokuapp.com.
