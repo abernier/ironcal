@@ -11,6 +11,7 @@ var argv = require('minimist')(process.argv.slice(2));
 
 // args values
 const ftpt = argv._[0] || 'ft'
+const tz = argv._[1] || 'Europe/Paris'
 const start = argv.start
 const hollidays = argv.hollidays && argv.hollidays.split(',')
 const help = argv.help
@@ -26,7 +27,7 @@ if (help) {
 // days -> ics
 //
 
-const days = dayslist(ftpt, start, hollidays)
+const days = dayslist(ftpt, tz, start, hollidays)
 // console.log(JSON.stringify(days, null, 4))
 
 const ics = dayslist2ics(days, ftpt)

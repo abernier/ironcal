@@ -10,11 +10,11 @@ app.listen()
 app.get('/', (req, res, next) => {
   console.log(req.query)
 
-  let {ftpt, start, hollidays='', calname} = req.query
+  let {ftpt, tzid, start, hollidays='', calname} = req.query
 
   hollidays = hollidays.split(',').filter(el => el.length) // ',' split + remove empty
 
-  const days = dayslist(ftpt, start, hollidays)
+  const days = dayslist(ftpt, tzid, start, hollidays)
   const ics = dayslist2ics(days, ftpt)
 
   res.attachment(`${calname || 'ironhack'}.ics`)

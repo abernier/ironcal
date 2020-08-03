@@ -2,10 +2,14 @@ const conf = require('./conf.js')
 
 require("luxon")
 const { RRule, RRuleSet } = require("rrule")
+
+const moment = require('moment-timezone')
+
 const ics = require('ics')
 
 const defaults = {
-  ftpt: 'ft'
+  ftpt: 'ft',
+  tzid: 'Europe/Paris'
 }
 
 function utc(str) {
@@ -20,9 +24,9 @@ function utc(str) {
 }
 
 // List of RRule's days abbrs: ["MO", "TU", ...]
-const RRuleWeekdays = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU].map(el => el.toString());
+const RRuleWeekdays = [RRule.SU, RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA].map(el => el.toString());
 
-function dayslist(ftpt=defaults.ftpt, start=new Date().toISOString().split('T')[0], hollidays=[]) {
+function dayslist(ftpt=defaults.ftpt, tzid=defaults.tzid, start=new Date().toISOString().split('T')[0], hollidays=[]) {
   const dtstart = new Date(utc(start))
 
   const weeks = conf[ftpt].weeks // ex: 24
@@ -67,7 +71,7 @@ function dayslist(ftpt=defaults.ftpt, start=new Date().toISOString().split('T')[
   hollidays.forEach(str => {
     const d = new Date(utc(str))
 
-    const weekday = RRuleWeekdays[d.getDay()-1] // "SA"
+    const weekday = RRuleWeekdays[d.getDay()] // "SA"
     const weekdayValue = weekdaysValues[weekday].length // 2
 
     if (weekdayValue) { // if this holli-day is a working day => remove it
@@ -103,20 +107,23 @@ function dayslist(ftpt=defaults.ftpt, start=new Date().toISOString().split('T')[
     return o
   }, {})
 
-  while (sum < weeks*unitsPerWeek*unit) { // FT: 45 days (9*5*1) / PT: 48 halfdays (24*4*.5)
-    const d = daySeries[i];
+  // FT: 45 days (9*5*1) / PT: 48 halfdays (24*4*.5)
+  while (sum < weeks*unitsPerWeek*unit) {
+    let d = daySeries[i]
     sum += unit
     
-    const weekday = RRuleWeekdays[d.getDay()-1] // "SA"
+    const weekday = RRuleWeekdays[d.getDay()] // "SA"
 
     let j = counters[weekday]++
     j = j%weekdaysValues[weekday].length
 
     const [hours, mins] = weekdaysValues[weekday][j].split(':')
-    d.setHours(+hours)
-    d.setMinutes(+mins)
 
-    days.push(d)
+    const day = d.toISOString().split('T')[0];
+    const d_with_time = moment.tz(`${day} ${hours}:${mins}`, tzid); // set local time
+    // console.log(d_with_time.utc().format())
+
+    days.push(d_with_time.utc().toDate()) // push as a normal JS-date
     
     i++;
   }
@@ -129,10 +136,12 @@ function dayslist2ics(days, ftpt=defaults.ftpt) {
   const { error, value } = ics.createEvents(days.map(day => {
     // console.log(day)
 
+    const start = [day.getUTCFullYear(), day.getUTCMonth()+1, day.getUTCDate(), day.getUTCHours(), day.getUTCMinutes()]
+
     return {
       title: `Ironhack`,
-      start: [day.getFullYear(), day.getMonth()+1, day.getDate(), day.getHours(), day.getMinutes()],
-      startType: "local", // local time
+      start,
+      startInputType: 'utc', // see: https://github.com/adamgibbons/ics/issues/126#issuecomment-586352771
       duration: { minutes: conf[ftpt].durationInHours*60 }
     }
   }))

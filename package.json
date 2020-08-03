@@ -12,6 +12,7 @@
     "ics": "^2.22.1",
     "luxon": "^1.24.1",
     "minimist": "^1.2.5",
+    "moment-timezone": "^0.5.31",
     "rrule": "^2.6.4"
   }
 }

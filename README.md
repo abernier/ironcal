@@ -15,23 +15,24 @@ $ npx ironcal --help
 ## Example
 
 ```sh
-$ npx ironcal pt --start=2020-06-02 --hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21 >wdpt202006par.ics
+$ npx ironcal pt Europe/Paris --start=2020-06-02 --hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21 >wdpt202006par.ics
 ```
 
 ![](https://assets.codepen.io/67030/Screenshot+2020-08-03+at+00.50.17.png)
 
 NB: The `ics` file is directly printed to `stdout`: to save it to disk, remember to redirect > to `wdpt202006par.ics`.
+NB: Find your timezone ID [here](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/zone_tzid.html)
 
 # JS API
 
 ```js
 const {dayslist} = require('ironcal')
 
-const days = dayslist('pt', '2020-06-02', ['2020-06-20','2020-07-04','2020-07-14','2020-08-11','2020-08-13','2020-08-15','2020-08-18','2020-08-20','2020-08-22','2020-09-19','2020-10-17','2020-11-10','2020-11-21'])
+const days = dayslist('pt', 'Europe/Paris', '2020-06-02', ['2020-06-20','2020-07-04','2020-07-14','2020-08-11','2020-08-13','2020-08-15','2020-08-18','2020-08-20','2020-08-22','2020-09-19','2020-10-17','2020-11-10','2020-11-21'])
 console.log(days)
 ```
 
-outputs a list of dates (45 days (`9*5*1`) for FT / 48 halfdays (`24*4*.5`) for PT)
+outputs a list of UTC dates (45 days (`9*5`) for FT / 96 halfdays (`24*4`) for PT)
 
 ```js
 [
@@ -101,7 +102,7 @@ outputs a list of dates (45 days (`9*5*1`) for FT / 48 halfdays (`24*4*.5`) for 
   "2020-10-20T16:30:00.000Z",
   "2020-10-22T16:30:00.000Z",
   "2020-10-24T08:00:00.000Z",
-  "2020-10-24T12:00:00.000Z",
+  "2020-10-24T12:00:00.000Z", // timesaving change during 24th-25th night +2 -> +1
   "2020-10-27T17:30:00.000Z",
   "2020-10-29T17:30:00.000Z",
   "2020-10-31T09:00:00.000Z",
@@ -153,20 +154,21 @@ PRODID:adamgibbons/ics
 METHOD:PUBLISH
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:4c4e2046-4083-4194-a42e-5202d32ada49
+UID:1eb7041f-99c8-4439-98af-bb8ef3c13bda
 SUMMARY:Ironhack
-DTSTAMP:20200803T055507Z
-DTSTART:20200602T183000
-DURATION:PT180M
-END:VEVENT
-BEGIN:VEVENT
-UID:eab8545c-34eb-4d35-adf8-958e2d081aa7
-SUMMARY:Ironhack
-DTSTAMP:20200803T055507Z
-DTSTART:20200604T183000
+DTSTAMP:20200803T143013Z
+DTSTART:20200602T163000Z
 DURATION:PT180M
 END:VEVENT
 ...
+BEGIN:VEVENT
+UID:125168f8-f4d1-4177-a3c4-4f011995e37e
+SUMMARY:Ironhack
+DTSTAMP:20200803T143013Z
+DTSTART:20201219T130000Z
+DURATION:PT180M
+END:VEVENT
+END:VCALENDAR
 ```
 
 # Docker
@@ -202,7 +204,8 @@ $ heroku container:release web
 Start the web server: `node server.js` or `docker run -p 3000:3000 ironcal`, then:
 
 ```sh
-curl http://localhost:3000/?ftpt=pt&start=2020-06-02&hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21&calname=wdpt202006par
+curl http://localhost:3000/?ftpt=pt&tzid=Europe%2FParis&start=2020-06-02&hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21&calname=wdpt202006par
 ```
 
+NB: you need to `encodeURIComponent` your `tzid` value, eg: `Europe%2FParis` for `Europe/Paris`
 NB: there is also a running instance on https://ironcal.herokuapp.com.

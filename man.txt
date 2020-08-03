@@ -1,15 +1,15 @@
-Usage: npx ironcal PTFT [ --start=START_DATE --hollidays=HOLLIDAYS ]
+Usage: npx ironcal PTFT TZID [ --start=START_DATE --hollidays=HOLLIDAYS ]
 
 Generates a calendar for an Ironhack cohort.
 
-Example: npx ironcal pt --start=2020-06-02 --hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21
+Example: npx ironcal pt Europe/Paris --start=2020-06-02 --hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21
 
 Arguments:
 
-  PTFT:       ft or pt (Default: ft)
+  PTFT: ft or pt (Default: ft)
+  TZID: Timezone ID, eg: Europe/Paris (see the list: https://unicode-org.github.io/cldr-staging/charts/37/supplemental/zone_tzid.html)
 
 Options:
 
   START_DATE: The day in the format YYYY-MM-DD when the course begins
-
   HOLLIDAYS:  A comma-separated list of days in the format YYYY-MM-DD for days-off
