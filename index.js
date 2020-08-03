@@ -1,7 +1,12 @@
 const conf = require('./conf.js')
 
 require("luxon")
-const { RRule, RRuleSet, rrulestr } = require("rrule")
+const { RRule, RRuleSet } = require("rrule")
+const ics = require('ics')
+
+const defaults = {
+  ftpt: 'ft'
+}
 
 function utc(str) {
   //
@@ -17,7 +22,7 @@ function utc(str) {
 // List of RRule's days abbrs: ["MO", "TU", ...]
 const RRuleWeekdays = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR, RRule.SA, RRule.SU].map(el => el.toString());
 
-module.exports = function (ftpt='ft', start=new Date().toISOString().split('T')[0], hollidays=[]) {
+function dayslist(ftpt=defaults.ftpt, start=new Date().toISOString().split('T')[0], hollidays=[]) {
   const dtstart = new Date(utc(start))
 
   const weeks = conf[ftpt].weeks // ex: 24
@@ -117,4 +122,26 @@ module.exports = function (ftpt='ft', start=new Date().toISOString().split('T')[
   }
 
   return days;
+}
+
+function dayslist2ics(days, ftpt=defaults.ftpt) {
+  // ics: see https://www.npmjs.com/package/ics/v/2.10.0
+  const { error, value } = ics.createEvents(days.map(day => {
+    // console.log(day)
+
+    return {
+      title: `Ironhack`,
+      start: [day.getFullYear(), day.getMonth()+1, day.getDate(), day.getHours(), day.getMinutes()],
+      duration: { minutes: conf[ftpt].durationInHours*60 }
+    }
+  }))
+
+  if (error) throw error
+
+  return value
+}
+
+module.exports = {
+  dayslist,
+  dayslist2ics
 }

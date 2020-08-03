@@ -133,3 +133,39 @@ outputs a list of dates (45 days (`9*5*1`) for FT / 48 halfdays (`24*4*.5`) for 
   "2020-12-19T13:00:00.000Z"
 ]
 ```
+
+# Docker
+
+## Build
+
+```sh
+$ docker build -t ironcal .
+```
+
+## Deploy
+
+Create a Heroku `ironcal-abernier` app if not exist yet:
+
+```sh
+$ heroku login
+$ heroku apps:create ironcal-abernier --stack=container
+$ docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
+```
+
+Once, push your `ironcal` image to Heroku:
+
+```sh
+$ docker tag ironcal registry.heroku.com/ironcal-abernier/web
+$ docker push registry.heroku.com/ironcal-abernier/web
+$ heroku container:release web
+```
+
+# HTTP API
+
+Start the web server: `node server.js` or `docker run -p 3000:3000 ironcal`, then:
+
+```sh
+curl http://localhost:3000/?ftpt=pt&start=2020-06-02&hollidays=2020-06-20,2020-07-04,2020-07-14,2020-08-11,2020-08-13,2020-08-15,2020-08-18,2020-08-20,2020-08-22,2020-09-19,2020-10-17,2020-11-10,2020-11-21
+```
+
+NB: there is also a running instance on https://ironcal.herokuapp.com.

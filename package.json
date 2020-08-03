@@ -8,6 +8,7 @@
     "url": "https://github.com/abernier/ironcal.git"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "ics": "^2.22.1",
     "luxon": "^1.24.1",
     "minimist": "^1.2.5",
