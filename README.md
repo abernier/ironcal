@@ -25,10 +25,10 @@ NB: The `ics` file is directly printed to `stdout`: to save it to disk, remember
 # JS API
 
 ```js
-const ironcal = require('ironcal')
+const {dayslist} = require('ironcal')
 
-const json = ironcal('pt', '2020-06-02', ['2020-06-20','2020-07-04','2020-07-14','2020-08-11','2020-08-13','2020-08-15','2020-08-18','2020-08-20','2020-08-22','2020-09-19','2020-10-17','2020-11-10','2020-11-21'])
-console.log(json)
+const days = dayslist('pt', '2020-06-02', ['2020-06-20','2020-07-04','2020-07-14','2020-08-11','2020-08-13','2020-08-15','2020-08-18','2020-08-20','2020-08-22','2020-09-19','2020-10-17','2020-11-10','2020-11-21'])
+console.log(days)
 ```
 
 outputs a list of dates (45 days (`9*5*1`) for FT / 48 halfdays (`24*4*.5`) for PT)
@@ -132,6 +132,41 @@ outputs a list of dates (45 days (`9*5*1`) for FT / 48 halfdays (`24*4*.5`) for 
   "2020-12-19T09:00:00.000Z",
   "2020-12-19T13:00:00.000Z"
 ]
+```
+
+You can also transform this list into an ICS string:
+
+```js
+const {dayslist2ics} = require('ironcal')
+
+const ics = dayslist2ics(days)
+console.log(ics)
+```
+
+outputs:
+
+```
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+PRODID:adamgibbons/ics
+METHOD:PUBLISH
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:4c4e2046-4083-4194-a42e-5202d32ada49
+SUMMARY:Ironhack
+DTSTAMP:20200803T055507Z
+DTSTART:20200602T163000Z
+DURATION:PT180M
+END:VEVENT
+BEGIN:VEVENT
+UID:eab8545c-34eb-4d35-adf8-958e2d081aa7
+SUMMARY:Ironhack
+DTSTAMP:20200803T055507Z
+DTSTART:20200604T163000Z
+DURATION:PT180M
+END:VEVENT
+...
 ```
 
 # Docker
