@@ -20,8 +20,8 @@ $ npx ironcal pt Europe/Paris --start=2020-06-02 --hollidays=2020-06-20,2020-07-
 
 ![](https://assets.codepen.io/67030/Screenshot+2020-08-03+at+00.50.17.png)
 
-NB: The `ics` file is directly printed to `stdout`: to save it to disk, remember to redirect > to `wdpt202006par.ics`.
-NB: Find your timezone ID [here](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/zone_tzid.html)
+- NB: The `ics` file is directly printed to `stdout`: to save it to disk, remember to redirect > to `wdpt202006par.ics`.
+- NB: Find your timezone ID [here](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/zone_tzid.html)
 
 # JS API
 
