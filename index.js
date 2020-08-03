@@ -132,6 +132,7 @@ function dayslist2ics(days, ftpt=defaults.ftpt) {
     return {
       title: `Ironhack`,
       start: [day.getFullYear(), day.getMonth()+1, day.getDate(), day.getHours(), day.getMinutes()],
+      startType: "local", // local time
       duration: { minutes: conf[ftpt].durationInHours*60 }
     }
   }))
