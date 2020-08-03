@@ -144,6 +144,8 @@ $ docker build -t ironcal .
 
 ## Deploy
 
+NB: automatic deploy is enabled on this `master` branch for [`ironcal` app](https://dashboard.heroku.com/apps/ironcal/deploy/github).
+
 Create a Heroku `ironcal-abernier` app if not exist yet:
 
 ```sh
