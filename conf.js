@@ -15,8 +15,8 @@ module.exports = {
     weeks: 24,
     unit: .5, // halfday is the unit
     weekdaysValues: {
-      'TU': ['18:30'],
-      'TH': ['18:30'],
+      'MO': ['18:30'],
+      'WE': ['18:30'],
       'SA': ['10:00', '14:00'] // a saturday counts for 2 halfdays (unit)
     },
     durationInHours: 3
