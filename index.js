@@ -72,7 +72,7 @@ function dayslist(ftpt=defaults.ftpt, tzid=defaults.tzid, start=new Date().toISO
     const d = new Date(utc(str))
 
     const weekday = RRuleWeekdays[d.getDay()] // "SA"
-    const weekdayValue = weekdaysValues[weekday].length // 2
+    const weekdayValue = weekdaysValues[weekday]?.length // 2
 
     if (weekdayValue) { // if this holli-day is a working day => remove it
       exrules.push(new RRule({
